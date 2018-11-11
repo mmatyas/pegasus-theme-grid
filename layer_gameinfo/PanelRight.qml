@@ -31,7 +31,7 @@ Item {
     // a small delay to avoid loading videos during scrolling
     Timer {
         id: videoDelay
-        interval: 50
+        interval: 250
         onTriggered: {
             if (gameData && gameData.assets.videos.length > 0) {
                 for (var i = 0; i < gameData.assets.videos.length; i++)
