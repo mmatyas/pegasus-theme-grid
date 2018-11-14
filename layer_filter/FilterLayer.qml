@@ -28,7 +28,7 @@ FocusScope {
         if (event.isAutoRepeat)
             return;
 
-        if (api.keys.isCancel(event.key) || api.keys.isFilters(event.key)) {
+        if (api.keys.isCancel(event) || api.keys.isFilters(event)) {
             event.accepted = true;
             closeRequested();
         }

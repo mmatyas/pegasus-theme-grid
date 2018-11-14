@@ -157,7 +157,7 @@ Item {
             KeyNavigation.up: launchBtn
             KeyNavigation.down: launchBtn
             Keys.onPressed: {
-                if (api.keys.isAccept(event.key) && !event.isAutoRepeat) {
+                if (api.keys.isAccept(event) && !event.isAutoRepeat) {
                     event.accepted = true;
                     toggleFav();
                 }
@@ -196,7 +196,7 @@ Item {
 
             focus: true
             Keys.onPressed: {
-                if (api.keys.isAccept(event.key) && !event.isAutoRepeat) {
+                if (api.keys.isAccept(event) && !event.isAutoRepeat) {
                     event.accepted = true;
                     api.currentGame.launch();
                 }

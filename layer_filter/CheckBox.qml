@@ -72,7 +72,7 @@ Row {
     }
 
     Keys.onPressed: {
-        if (api.keys.isAccept(event.key) && !event.isAutoRepeat) {
+        if (api.keys.isAccept(event) && !event.isAutoRepeat) {
             event.accepted = true;
             checked = !checked;
         }

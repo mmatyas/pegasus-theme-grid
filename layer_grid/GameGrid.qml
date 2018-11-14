@@ -36,22 +36,22 @@ FocusScope {
         if (event.isAutoRepeat)
             return;
 
-        if (api.keys.isPrevPage(event.key)) {
+        if (api.keys.isPrevPage(event)) {
             event.accepted = true;
             prevPlatformRequested();
             return;
         }
-        if (api.keys.isNextPage(event.key)) {
+        if (api.keys.isNextPage(event)) {
             event.accepted = true;
             nextPlatformRequested();
             return;
         }
-        if (api.keys.isDetails(event.key)) {
+        if (api.keys.isDetails(event)) {
             event.accepted = true;
             detailsRequested();
             return;
         }
-        if (api.keys.isFilters(event.key)) {
+        if (api.keys.isFilters(event)) {
             event.accepted = true;
             filtersRequested();
             return;
@@ -77,15 +77,15 @@ FocusScope {
         Component.onCompleted: positionViewAtIndex(currentIndex, GridView.Center)
 
         Keys.onPressed: {
-            if (api.keys.isAccept(event.key) && !event.isAutoRepeat) {
+            if (api.keys.isAccept(event) && !event.isAutoRepeat) {
                 event.accepted = true;
                 root.launchRequested()
             }
-            if (api.keys.isPageUp(event.key) || api.keys.isPageDown(event.key)) {
+            if (api.keys.isPageUp(event) || api.keys.isPageDown(event)) {
                 event.accepted = true;
                 var rows_to_skip = Math.max(1, Math.round(grid.height / cellHeight));
                 var games_to_skip = rows_to_skip * columnCount;
-                if (api.keys.isPageUp(event.key))
+                if (api.keys.isPageUp(event))
                     currentIndex = Math.max(currentIndex - games_to_skip, 0);
                 else
                     currentIndex = Math.min(currentIndex + games_to_skip, model.length - 1);

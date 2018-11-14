@@ -35,12 +35,12 @@ FocusScope {
         if (event.isAutoRepeat)
             return;
 
-        if (api.keys.isCancel(event.key) || api.keys.isDetails(event.key)) {
+        if (api.keys.isCancel(event) || api.keys.isDetails(event)) {
             event.accepted = true;
             closeRequested();
             return;
         }
-        if (api.keys.isFilters(event.key)) {
+        if (api.keys.isFilters(event)) {
             event.accepted = true;
             filtersRequested();
             return;
