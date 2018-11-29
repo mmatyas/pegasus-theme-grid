@@ -24,7 +24,7 @@ import "layer_platform"
 
 FocusScope {
     property int collectionIndex: 0
-    readonly property var currentCollection: api.collections.model[collectionIndex]
+    readonly property var currentCollection: api.collections[collectionIndex]
 
     PlatformBar {
         id: topbar

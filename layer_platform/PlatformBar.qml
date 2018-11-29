@@ -19,7 +19,7 @@ import QtQuick 2.0
 import "qrc:/qmlutils" as PegasusUtils
 
 Rectangle {
-    property var platformModel: api.collections.model
+    property var platformModel: api.collections
 
     signal indexChanged(int index)
 
