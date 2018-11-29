@@ -22,6 +22,7 @@ import "qrc:/qmlutils" as PegasusUtils
 FocusScope {
     id: root
 
+    property var game
     property alias panelWidth: panelRect.width
     property bool renderLeftside: false
 
@@ -29,7 +30,7 @@ FocusScope {
     signal closeRequested
     signal filtersRequested
 
-    visible: api.collections.current.games.current
+    visible: game
 
     Keys.onPressed: {
         if (event.isAutoRepeat)
@@ -80,6 +81,7 @@ FocusScope {
                 bottom: parent.bottom; bottomMargin: vpx(8)
             }
 
+            game: root.game
             visible: root.renderLeftside
         }
 
@@ -91,6 +93,8 @@ FocusScope {
                 top: parent.top; topMargin: vpx(40)
                 bottom: parent.bottom; bottomMargin: vpx(8)
             }
+
+            game: root.game
         }
     }
 

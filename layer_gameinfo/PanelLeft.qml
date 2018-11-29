@@ -21,7 +21,7 @@ import "qrc:/qmlutils" as PegasusUtils
 
 
 Item {
-    property var gameData: api.collections.current.games.current
+    property var game
 
     onVisibleChanged: {
         if (visible)
@@ -40,7 +40,7 @@ Item {
 
         Text {
             color: "#eee"
-            text: (gameData && gameData.description) || ""
+            text: (game && game.description) || ""
             width: parent.width
             wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignJustify
@@ -82,13 +82,13 @@ Item {
 
             Text {
                 text: {
-                    if (isNaN(gameData.lastPlayed))
+                    if (isNaN(game.lastPlayed))
                         return "never";
 
                     var now = new Date();
 
-                    var diffHours = (now.getTime() - gameData.lastPlayed.getTime()) / 1000 / 60 / 60;
-                    if (diffHours < 24 && now.getDate() === gameData.lastPlayed.getDate())
+                    var diffHours = (now.getTime() - game.lastPlayed.getTime()) / 1000 / 60 / 60;
+                    if (diffHours < 24 && now.getDate() === game.lastPlayed.getDate())
                         return "today";
 
                     var diffDays = Math.round(diffHours / 24);
@@ -123,7 +123,7 @@ Item {
 
             Text {
                 text: {
-                    var minutes = Math.ceil(gameData.playTime / 60)
+                    var minutes = Math.ceil(game.playTime / 60)
                     if (minutes <= 90)
                         return Math.round(minutes) + " minutes";
 
@@ -148,10 +148,10 @@ Item {
             id: toggleFavBtn
             text: "Toggle favorite on/off" // FIXME: translate
 
-            property bool isFavorite: (gameData && gameData.favorite) || false
+            property bool isFavorite: (game && game.favorite) || false
             function toggleFav() {
-                if (api.collections.current.games.current)
-                    api.collections.current.games.current.favorite = !api.collections.current.games.current.favorite;
+                if (game)
+                    game.favorite = !game.favorite;
             }
 
             KeyNavigation.up: launchBtn
@@ -198,12 +198,12 @@ Item {
             Keys.onPressed: {
                 if (api.keys.isAccept(event) && !event.isAutoRepeat) {
                     event.accepted = true;
-                    api.collections.current.games.current.launch();
+                    game.launch();
                 }
             }
             onClicked: {
                 focus = true;
-                api.collections.current.games.current.launch();
+                game.launch();
             }
         }
     }

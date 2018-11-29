@@ -21,11 +21,19 @@ import "qrc:/qmlutils" as PegasusUtils
 Rectangle {
     property var platformModel: api.collections.model
 
+    signal indexChanged(int index)
+
     color: "#333"
     height: vpx(54)
 
-    function next() { platformPath.incrementCurrentIndex() }
-    function prev() { platformPath.decrementCurrentIndex() }
+    function next() {
+        platformPath.incrementCurrentIndex();
+        indexChanged(platformPath.currentIndex);
+    }
+    function prev() {
+        platformPath.decrementCurrentIndex();
+        indexChanged(platformPath.currentIndex);
+    }
 
     PathView {
         id: platformPath
@@ -55,9 +63,6 @@ Rectangle {
         snapMode: PathView.SnapOneItem
         preferredHighlightBegin: 0.04
         preferredHighlightEnd: 0.05
-
-        Component.onCompleted: currentIndex = api.collections.index
-        onCurrentIndexChanged: api.collections.index = currentIndex
     }
 
     Component {
@@ -80,14 +85,14 @@ Rectangle {
         onWheel: {
             wheel.accepted = true;
             if (wheel.angleDelta.x > 0 || wheel.angleDelta.y > 0)
-                platformPath.incrementCurrentIndex();
+                next();
             else
-                platformPath.decrementCurrentIndex();
+                prev();
         }
     }
     PegasusUtils.HorizontalSwipeArea {
         anchors.fill: parent
-        onSwipeLeft: platformPath.incrementCurrentIndex()
-        onSwipeRight: platformPath.decrementCurrentIndex()
+        onSwipeLeft: next()
+        onSwipeRight: prev()
     }
 }

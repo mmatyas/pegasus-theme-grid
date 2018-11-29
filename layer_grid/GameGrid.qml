@@ -24,7 +24,7 @@ FocusScope {
     property alias gridWidth: grid.width
     property int gridMarginTop: 0
     property int gridMarginRight: 0
-    property var platformData: api.collections.current
+    property var platform
 
     signal launchRequested
     signal detailsRequested
@@ -69,11 +69,11 @@ FocusScope {
             bottom: parent.bottom
         }
 
-        model: platformData ? platformData.games.model : []
+        model: platform ? platform.games.model : []
         onModelChanged: { firstImageLoaded = false; cellHeightRatio = 0.5; }
 
-        currentIndex: platformData ? platformData.games.index : 0
-        onCurrentIndexChanged: if (api.collections.current) api.collections.current.games.index = currentIndex
+        currentIndex: platform ? platform.games.index : 0
+        onCurrentIndexChanged: if (platform) platform.games.index = currentIndex
         Component.onCompleted: positionViewAtIndex(currentIndex, GridView.Center)
 
         Keys.onPressed: {
@@ -92,7 +92,7 @@ FocusScope {
             }
             if (event.modifiers === Qt.AltModifier && event.text) {
                 event.accepted = true;
-                api.collections.current.games.jumpToLetter(event.text);
+                platform.games.jumpToLetter(event.text);
             }
         }
 

@@ -19,16 +19,16 @@ import QtQuick 2.0
 import QtGraphicalEffects 1.0
 
 Item {
-    property var gameData: api.collections.current.games.current
+    property var game
 
     Image {
         anchors.fill: parent
-        visible: gameData
+        visible: game
 
         asynchronous: true
-        opacity: (gameData && gameData.assets.background) ? 1 : 0.35
+        opacity: (game && game.assets.background) ? 1 : 0.35
 
-        source: gameData ? gameData.assets.background || gameData.assets.screenshots[0] || "" : ""
+        source: game ? game.assets.background || game.assets.screenshots[0] || "" : ""
         sourceSize { width: 512; height: 512 }
         fillMode: Image.PreserveAspectCrop
         smooth: false
