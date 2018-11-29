@@ -52,7 +52,7 @@ FocusScope {
             left: parent.left; right: parent.right
         }
 
-        onLaunchRequested: api.currentGame.launch()
+        onLaunchRequested: api.collections.current.games.current.launch()
         onDetailsRequested: gamepreview.focus = true
         onFiltersRequested: filter.focus = true
         onNextPlatformRequested: topbar.next()

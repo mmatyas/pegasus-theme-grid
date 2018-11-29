@@ -29,7 +29,7 @@ FocusScope {
     signal closeRequested
     signal filtersRequested
 
-    visible: api.currentGame
+    visible: api.collections.current.games.current
 
     Keys.onPressed: {
         if (event.isAutoRepeat)

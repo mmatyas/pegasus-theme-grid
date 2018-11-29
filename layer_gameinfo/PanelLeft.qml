@@ -21,7 +21,7 @@ import "qrc:/qmlutils" as PegasusUtils
 
 
 Item {
-    property var gameData: api.currentGame
+    property var gameData: api.collections.current.games.current
 
     onVisibleChanged: {
         if (visible)
@@ -150,8 +150,8 @@ Item {
 
             property bool isFavorite: (gameData && gameData.favorite) || false
             function toggleFav() {
-                if (api.currentGame)
-                    api.currentGame.favorite = !api.currentGame.favorite;
+                if (api.collections.current.games.current)
+                    api.collections.current.games.current.favorite = !api.collections.current.games.current.favorite;
             }
 
             KeyNavigation.up: launchBtn
@@ -198,12 +198,12 @@ Item {
             Keys.onPressed: {
                 if (api.keys.isAccept(event) && !event.isAutoRepeat) {
                     event.accepted = true;
-                    api.currentGame.launch();
+                    api.collections.current.games.current.launch();
                 }
             }
             onClicked: {
                 focus = true;
-                api.currentGame.launch();
+                api.collections.current.games.current.launch();
             }
         }
     }

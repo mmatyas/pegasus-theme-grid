@@ -20,7 +20,7 @@ import QtMultimedia 5.9
 
 
 Item {
-    property var gameData: api.currentGame
+    property var gameData: api.collections.current.games.current
 
     onGameDataChanged: {
         videoPreview.stop();
