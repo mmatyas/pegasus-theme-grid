@@ -90,10 +90,6 @@ FocusScope {
                 else
                     currentIndex = Math.min(currentIndex + games_to_skip, model.length - 1);
             }
-            if (event.modifiers === Qt.AltModifier && event.text) {
-                event.accepted = true;
-                platform.games.jumpToLetter(event.text);
-            }
         }
 
         // For better visibility, box arts should be displayed in five columns if
