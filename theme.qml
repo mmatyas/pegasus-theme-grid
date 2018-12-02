@@ -23,9 +23,6 @@ import "layer_platform"
 
 
 FocusScope {
-    property int collectionIndex: 0
-    readonly property var currentCollection: api.collections[collectionIndex]
-
     PlatformBar {
         id: topbar
         z: 300
@@ -33,8 +30,6 @@ FocusScope {
             top: parent.top;
             left: parent.left; right: parent.right
         }
-
-        onIndexChanged: collectionIndex = index;
     }
 
     BackgroundImage {
@@ -43,7 +38,7 @@ FocusScope {
             left: parent.left; right: parent.right
         }
 
-        game: currentCollection.games.current
+        game: gamegrid.currentGame
     }
 
     GameGrid {
@@ -59,12 +54,11 @@ FocusScope {
             left: parent.left; right: parent.right
         }
 
-        platform: currentCollection
-        onLaunchRequested: currentCollection.games.current.launch()
-        onDetailsRequested: gamepreview.focus = true
-        onFiltersRequested: filter.focus = true
+        platform: topbar.currentCollection
         onNextPlatformRequested: topbar.next()
         onPrevPlatformRequested: topbar.prev()
+        onDetailsRequested: gamepreview.focus = true
+        onFiltersRequested: filter.focus = true
     }
 
     GamePreview {
@@ -76,7 +70,7 @@ FocusScope {
             left: parent.left; right: parent.right
         }
 
-        game: currentCollection.games.current
+        game: gamegrid.currentGame
         onOpenRequested: gamepreview.focus = true
         onCloseRequested: gamegrid.focus = true
         onFiltersRequested: filter.focus = true

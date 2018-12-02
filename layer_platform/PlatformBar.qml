@@ -19,25 +19,22 @@ import QtQuick 2.0
 import "qrc:/qmlutils" as PegasusUtils
 
 Rectangle {
-    property var platformModel: api.collections
-
-    signal indexChanged(int index)
+    readonly property alias collectionIndex: platformPath.currentIndex
+    readonly property var currentCollection: api.collections[collectionIndex]
 
     color: "#333"
     height: vpx(54)
 
     function next() {
         platformPath.incrementCurrentIndex();
-        indexChanged(platformPath.currentIndex);
     }
     function prev() {
         platformPath.decrementCurrentIndex();
-        indexChanged(platformPath.currentIndex);
     }
 
     PathView {
         id: platformPath
-        model: platformModel
+        model: api.collections
         delegate: platformCardDelegate
 
         path: Path {

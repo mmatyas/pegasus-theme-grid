@@ -25,8 +25,9 @@ FocusScope {
     property int gridMarginTop: 0
     property int gridMarginRight: 0
     property var platform
+    readonly property alias gameIndex: grid.currentIndex
+    readonly property var currentGame: platform.games[gameIndex]
 
-    signal launchRequested
     signal detailsRequested
     signal filtersRequested
     signal nextPlatformRequested
@@ -69,18 +70,10 @@ FocusScope {
             bottom: parent.bottom
         }
 
-        model: platform ? platform.games.model : []
+        model: platform.games
         onModelChanged: { firstImageLoaded = false; cellHeightRatio = 0.5; }
 
-        currentIndex: platform ? platform.games.index : 0
-        onCurrentIndexChanged: if (platform) platform.games.index = currentIndex
-        Component.onCompleted: positionViewAtIndex(currentIndex, GridView.Center)
-
         Keys.onPressed: {
-            if (api.keys.isAccept(event) && !event.isAutoRepeat) {
-                event.accepted = true;
-                root.launchRequested()
-            }
             if (api.keys.isPageUp(event) || api.keys.isPageDown(event)) {
                 event.accepted = true;
                 var rows_to_skip = Math.max(1, Math.round(grid.height / cellHeight));
@@ -147,6 +140,11 @@ FocusScope {
             onDoubleClicked: {
                 GridView.view.currentIndex = index;
                 root.detailsRequested();
+            }
+            Keys.onPressed: {
+                if (api.keys.isAccept(event) && !event.isAutoRepeat) {
+                    modelData.launch();
+                }
             }
 
             imageHeightRatio: {
