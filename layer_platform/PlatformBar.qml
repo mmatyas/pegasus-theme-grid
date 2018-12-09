@@ -20,7 +20,7 @@ import "qrc:/qmlutils" as PegasusUtils
 
 Rectangle {
     readonly property alias collectionIndex: platformPath.currentIndex
-    readonly property var currentCollection: api.collections[collectionIndex]
+    readonly property var currentCollection: api.collections.get(collectionIndex)
 
     color: "#333"
     height: vpx(54)

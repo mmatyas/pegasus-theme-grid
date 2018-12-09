@@ -26,7 +26,7 @@ FocusScope {
     property int gridMarginRight: 0
     property var platform
     readonly property alias gameIndex: grid.currentIndex
-    readonly property var currentGame: platform.games[gameIndex]
+    readonly property var currentGame: platform.games.get(gameIndex)
 
     signal detailsRequested
     signal filtersRequested
