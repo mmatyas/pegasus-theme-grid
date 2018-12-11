@@ -58,7 +58,7 @@ FocusScope {
         onNextPlatformRequested: topbar.next()
         onPrevPlatformRequested: topbar.prev()
         onDetailsRequested: gamepreview.focus = true
-        onFiltersRequested: filter.focus = true
+        // onFiltersRequested: filter.focus = true
     }
 
     GamePreview {
@@ -73,13 +73,13 @@ FocusScope {
         game: gamegrid.currentGame
         onOpenRequested: gamepreview.focus = true
         onCloseRequested: gamegrid.focus = true
-        onFiltersRequested: filter.focus = true
+        // onFiltersRequested: filter.focus = true
     }
 
-    FilterLayer {
+    /*FilterLayer {
         id: filter
         anchors.fill: parent
 
         onCloseRequested: gamegrid.focus = true;
-    }
+    }*/
 }
