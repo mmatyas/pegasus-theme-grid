@@ -25,13 +25,14 @@ FocusScope {
     property int gridMarginTop: 0
     property int gridMarginRight: 0
     property var platform
-    readonly property alias gameIndex: grid.currentIndex
+    property alias gameIndex: grid.currentIndex
     readonly property var currentGame: platform.games.get(gameIndex)
 
     signal detailsRequested
     signal filtersRequested
     signal nextPlatformRequested
     signal prevPlatformRequested
+    signal launchRequested
 
     Keys.onPressed: {
         if (event.isAutoRepeat)
@@ -143,7 +144,7 @@ FocusScope {
             }
             Keys.onPressed: {
                 if (api.keys.isAccept(event) && !event.isAutoRepeat) {
-                    modelData.launch();
+                    root.launchRequested();
                 }
             }
 

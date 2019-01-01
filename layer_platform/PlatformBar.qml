@@ -19,7 +19,7 @@ import QtQuick 2.0
 import "qrc:/qmlutils" as PegasusUtils
 
 Rectangle {
-    readonly property alias collectionIndex: platformPath.currentIndex
+    property alias collectionIndex: platformPath.currentIndex
     readonly property var currentCollection: api.collections.get(collectionIndex)
 
     color: "#333"

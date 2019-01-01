@@ -29,6 +29,7 @@ FocusScope {
     signal openRequested
     signal closeRequested
     signal filtersRequested
+    signal launchRequested
 
     visible: game
 
@@ -83,6 +84,7 @@ FocusScope {
 
             game: root.game
             visible: root.renderLeftside
+            onLaunchRequested: root.launchRequested()
         }
 
         PanelRight {

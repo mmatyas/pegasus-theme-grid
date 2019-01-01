@@ -59,6 +59,7 @@ FocusScope {
         onPrevPlatformRequested: topbar.prev()
         onDetailsRequested: gamepreview.focus = true
         // onFiltersRequested: filter.focus = true
+        onLaunchRequested: launchGame()
     }
 
     GamePreview {
@@ -74,6 +75,7 @@ FocusScope {
         onOpenRequested: gamepreview.focus = true
         onCloseRequested: gamegrid.focus = true
         // onFiltersRequested: filter.focus = true
+        onLaunchRequested: launchGame()
     }
 
     /*FilterLayer {
@@ -82,4 +84,15 @@ FocusScope {
 
         onCloseRequested: gamegrid.focus = true;
     }*/
+
+    Component.onCompleted: {
+        topbar.collectionIndex = api.memory.get('collectionIndex') || 0;
+        gamegrid.gameIndex = api.memory.get('gameIndex') || 0;
+    }
+
+    function launchGame() {
+        api.memory.set('collectionIndex', topbar.collectionIndex);
+        api.memory.set('gameIndex', gamegrid.gameIndex);
+        gamegrid.currentGame.launch();
+    }
 }

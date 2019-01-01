@@ -23,6 +23,8 @@ import "qrc:/qmlutils" as PegasusUtils
 Item {
     property var game
 
+    signal launchRequested
+
     onVisibleChanged: {
         if (visible)
             scrollArea.restartScroll();
@@ -198,12 +200,12 @@ Item {
             Keys.onPressed: {
                 if (api.keys.isAccept(event) && !event.isAutoRepeat) {
                     event.accepted = true;
-                    game.launch();
+                    launchRequested();
                 }
             }
             onClicked: {
                 focus = true;
-                game.launch();
+                launchRequested();
             }
         }
     }
