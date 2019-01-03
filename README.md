@@ -1,4 +1,4 @@
-![screenshot](meta/screenshot.jpg)
+![screenshot](.meta/screenshot.jpg)
 
 # Grid theme for Pegasus
 
