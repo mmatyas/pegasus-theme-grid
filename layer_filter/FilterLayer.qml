@@ -1,5 +1,5 @@
 // Pegasus Frontend
-// Copyright (C) 2017-2018  Mátyás Mustoha
+// Copyright (C) 2017-2019  Mátyás Mustoha
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ FocusScope {
     id: root
 
     signal closeRequested
+    signal titleFilterChanged(string tfil)
 
     Keys.onPressed: {
         if (event.isAutoRepeat)
@@ -39,9 +40,9 @@ FocusScope {
         id: shade
         anchors.fill: parent
 
-        color: "black"
+        color: "#000"
         opacity: 0
-        Behavior on opacity { NumberAnimation { duration: 500 } }
+        Behavior on opacity { NumberAnimation { duration: 400 } }
 
         PegasusUtils.HorizontalSwipeArea {
             anchors.fill: parent
@@ -59,6 +60,8 @@ FocusScope {
         anchors.right: parent.left
         visible: false
 
+        onTitleFilterChanged: root.titleFilterChanged(tfil)
+
         MouseArea {
             anchors.fill: parent
             enabled: panel.visible
@@ -69,7 +72,7 @@ FocusScope {
     states: [
         State {
             name: "open"; when: root.focus
-            PropertyChanges { target: shade; opacity: 0.2 }
+            PropertyChanges { target: shade; opacity: 0.25 }
             AnchorChanges {
                 target: panel
                 anchors.left: parent.left

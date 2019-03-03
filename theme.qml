@@ -1,5 +1,5 @@
 // Pegasus Frontend
-// Copyright (C) 2017  Mátyás Mustoha
+// Copyright (C) 2017-2019  Mátyás Mustoha
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -58,7 +58,7 @@ FocusScope {
         onNextPlatformRequested: topbar.next()
         onPrevPlatformRequested: topbar.prev()
         onDetailsRequested: gamepreview.focus = true
-        // onFiltersRequested: filter.focus = true
+        onFiltersRequested: filter.focus = true
         onLaunchRequested: launchGame()
     }
 
@@ -74,16 +74,17 @@ FocusScope {
         game: gamegrid.currentGame
         onOpenRequested: gamepreview.focus = true
         onCloseRequested: gamegrid.focus = true
-        // onFiltersRequested: filter.focus = true
+        onFiltersRequested: filter.focus = true
         onLaunchRequested: launchGame()
     }
 
-    /*FilterLayer {
+    FilterLayer {
         id: filter
         anchors.fill: parent
 
-        onCloseRequested: gamegrid.focus = true;
-    }*/
+        onCloseRequested: gamegrid.focus = true
+        onTitleFilterChanged: gamegrid.filterTitle = tfil
+    }
 
     Component.onCompleted: {
         topbar.collectionIndex = api.memory.get('collectionIndex') || 0;

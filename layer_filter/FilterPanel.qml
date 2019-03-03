@@ -1,5 +1,5 @@
 // Pegasus Frontend
-// Copyright (C) 2017-2018  Mátyás Mustoha
+// Copyright (C) 2017-2019  Mátyás Mustoha
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
 
 
 import QtQuick 2.0
-import QtGraphicalEffects 1.0
 
 
 FocusScope {
@@ -25,6 +24,8 @@ FocusScope {
     property alias panelColor: panel.color
     property color textColor: "#eee"
 
+    signal titleFilterChanged(string tfil)
+
     width: content.width
     height: content.height
 
@@ -32,12 +33,6 @@ FocusScope {
         id: panel
         color: "#ff6235"
         anchors.fill: parent
-    }
-
-    DropShadow {
-        source: panel
-        anchors.fill: panel
-        radius: vpx(10)
     }
 
     Item {
@@ -53,7 +48,7 @@ FocusScope {
             padding * 2
             + itemHeader.height + spacing
             + itemTitleFilter.height + spacing
-            + api.filters.count * (normalTextSize * 1.4 + spacing))
+            /*+ api.filters.count * (normalTextSize * 1.4 + spacing)*/)
 
 
         Text {
@@ -80,10 +75,10 @@ FocusScope {
             placeholderColor: "#bbb" // FIXME
             textColor: root.textColor
             fontSize: content.normalTextSize
-            onTextChanged: api.filters.gameTitle = text
+            onTextChanged: root.titleFilterChanged(text)
 
             focus: true
-            KeyNavigation.down: itemFilterList
+            //KeyNavigation.down: itemFilterList
 
             anchors {
                 top: itemHeader.bottom; topMargin: parent.spacing
@@ -92,7 +87,7 @@ FocusScope {
             }
         }
 
-        ListView {
+        /*ListView {
             id: itemFilterList
 
             anchors {
@@ -111,12 +106,11 @@ FocusScope {
 
                 checked: modelData.enabled
                 onCheckedChanged: api.filters.current.enabled = checked
-
             }
             spacing: parent.spacing
 
             Component.onCompleted: currentIndex = api.filters.index
             onCurrentIndexChanged: api.filters.index = currentIndex
-        }
+        }*/
     }
 }

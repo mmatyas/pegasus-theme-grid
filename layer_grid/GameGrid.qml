@@ -1,5 +1,5 @@
 // Pegasus Frontend
-// Copyright (C) 2017-2018  Mátyás Mustoha
+// Copyright (C) 2017-2019  Mátyás Mustoha
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,6 +16,7 @@
 
 
 import QtQuick 2.3
+import SortFilterProxyModel 0.2
 
 
 FocusScope {
@@ -24,9 +25,12 @@ FocusScope {
     property alias gridWidth: grid.width
     property int gridMarginTop: 0
     property int gridMarginRight: 0
+
+    property string filterTitle: ""
+
     property var platform
     property alias gameIndex: grid.currentIndex
-    readonly property var currentGame: platform.games.get(gameIndex)
+    readonly property var currentGame: filteredGames.count, filteredGames.get(gameIndex)
 
     signal detailsRequested
     signal filtersRequested
@@ -60,6 +64,16 @@ FocusScope {
         }
     }
 
+    SortFilterProxyModel {
+        id: filteredGames
+        sourceModel: platform.games
+        filters: RegExpFilter {
+            roleName: "title"
+            pattern: filterTitle
+            caseSensitivity: Qt.CaseInsensitive
+        }
+    }
+
     GridView {
         id: grid
 
@@ -71,7 +85,7 @@ FocusScope {
             bottom: parent.bottom
         }
 
-        model: platform.games
+        model: filteredGames
         onModelChanged: { firstImageLoaded = false; cellHeightRatio = 0.5; }
 
         Keys.onPressed: {
