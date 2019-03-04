@@ -86,8 +86,14 @@ FocusScope {
             bottom: parent.bottom
         }
 
+        function cells_need_recalc() {
+            firstImageLoaded = false;
+            cellHeightRatio = 0.5;
+        }
+
         model: filteredGames
-        onModelChanged: { firstImageLoaded = false; cellHeightRatio = 0.5; }
+        onModelChanged: cells_need_recalc()
+        onCountChanged: cells_need_recalc()
 
         Keys.onPressed: {
             if (api.keys.isPageUp(event) || api.keys.isPageDown(event)) {
