@@ -30,7 +30,8 @@ FocusScope {
 
     property var platform
     property alias gameIndex: grid.currentIndex
-    readonly property var currentGame: filteredGames.count, filteredGames.get(gameIndex)
+    readonly property int srcGameIndex: filteredGames.mapToSource(gameIndex)
+    readonly property var currentGame: srcGameIndex >= 0 ? platform.games.get(srcGameIndex) : null
 
     signal detailsRequested
     signal filtersRequested
