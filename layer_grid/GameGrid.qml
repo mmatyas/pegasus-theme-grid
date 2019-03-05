@@ -103,7 +103,7 @@ FocusScope {
                 if (api.keys.isPageUp(event))
                     currentIndex = Math.max(currentIndex - games_to_skip, 0);
                 else
-                    currentIndex = Math.min(currentIndex + games_to_skip, model.length - 1);
+                    currentIndex = Math.min(currentIndex + games_to_skip, model.count - 1);
             }
         }
 
