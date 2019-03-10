@@ -62,7 +62,7 @@ Item {
         anchors.centerIn: parent
 
         visible: boxFront.status === Image.Loading
-        source: "/common/loading-spinner.png"
+        source: "../assets/loading-spinner.png"
 
         RotationAnimator on rotation {
             loops: Animator.Infinite;
