@@ -25,6 +25,7 @@ FocusScope {
     property alias gridWidth: grid.width
     property int gridMarginTop: 0
     property int gridMarginRight: 0
+    property bool memoryLoaded: false
 
     property string filterTitle: ""
 
@@ -38,6 +39,8 @@ FocusScope {
     signal nextPlatformRequested
     signal prevPlatformRequested
     signal launchRequested
+
+    onPlatformChanged: if (memoryLoaded) gameIndex = 0;
 
     Keys.onPressed: {
         if (event.isAutoRepeat)
@@ -94,6 +97,7 @@ FocusScope {
         model: filteredGames
         onModelChanged: cells_need_recalc()
         onCountChanged: cells_need_recalc()
+
 
         Keys.onPressed: {
             if (api.keys.isPageUp(event) || api.keys.isPageDown(event)) {

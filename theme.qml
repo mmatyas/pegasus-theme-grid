@@ -87,8 +87,15 @@ FocusScope {
     }
 
     Component.onCompleted: {
-        topbar.collectionIndex = api.memory.get('collectionIndex') || 0;
-        gamegrid.gameIndex = api.memory.get('gameIndex') || 0;
+        var coll_idx = api.memory.get('collectionIndex') || 0;
+        var game_idx = api.memory.get('gameIndex') || 0;
+
+        if (coll_idx < api.collections.length)
+            topbar.collectionIndex = coll_idx;
+        if (coll_idx < api.collections.get(coll_idx).games.length)
+            gamegrid.gameIndex = game_idx;
+
+        gamegrid.memoryLoaded = true;
     }
 
     function launchGame() {
