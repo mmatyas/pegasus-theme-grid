@@ -84,6 +84,8 @@ Item {
 
             Text {
                 text: {
+                    if (!game)
+                        return "-";
                     if (isNaN(game.lastPlayed))
                         return "never";
 
@@ -125,6 +127,9 @@ Item {
 
             Text {
                 text: {
+                    if (!game)
+                        return "-";
+
                     var minutes = Math.ceil(game.playTime / 60)
                     if (minutes <= 90)
                         return Math.round(minutes) + " minutes";

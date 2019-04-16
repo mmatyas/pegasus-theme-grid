@@ -31,7 +31,8 @@ FocusScope {
 
     property var platform
     property alias gameIndex: grid.currentIndex
-    readonly property int srcGameIndex: filteredGames.mapToSource(gameIndex)
+    readonly property bool gameIndexValid: 0 <= gameIndex && gameIndex < grid.count
+    readonly property int srcGameIndex: gameIndexValid ? filteredGames.mapToSource(gameIndex) : -1
     readonly property var currentGame: srcGameIndex >= 0 ? platform.games.get(srcGameIndex) : null
 
     signal detailsRequested
@@ -40,7 +41,7 @@ FocusScope {
     signal prevPlatformRequested
     signal launchRequested
 
-    onPlatformChanged: if (memoryLoaded) gameIndex = 0;
+    onPlatformChanged: if (memoryLoaded && grid.count) gameIndex = 0;
 
     Keys.onPressed: {
         if (event.isAutoRepeat)
