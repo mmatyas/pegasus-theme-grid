@@ -91,8 +91,8 @@ Item {
             if (!game)
                 return text_tmp;
 
-            if (game.year > 0)
-                text_tmp += game.year;
+            if (game.releaseYear > 0)
+                text_tmp += game.releaseYear;
             if (game.developer) {
                 if (text_tmp)
                     text_tmp += " \u2014 ";
