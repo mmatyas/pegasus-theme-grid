@@ -46,9 +46,15 @@ Item {
         anchors { fill: parent; margins: vpx(5) }
 
         asynchronous: true
-        visible: game.assets.boxFront
+        visible: source
 
-        source: game.assets.boxFront || ""
+        source: game.assets.boxFront
+            || game.assets.poster
+            || game.assets.banner
+            || game.assets.steam
+            || game.assets.tile
+            || game.assets.cartridge
+            || ""
         sourceSize { width: 256; height: 256 }
         fillMode: Image.PreserveAspectFit
 
@@ -76,7 +82,7 @@ Item {
         width: parent.width - vpx(64)
         anchors.centerIn: parent
 
-        visible: !game.assets.boxFront
+        visible: !boxFront.visible
 
         text: game.title
         wrapMode: Text.Wrap
