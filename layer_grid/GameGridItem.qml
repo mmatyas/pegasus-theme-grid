@@ -46,7 +46,7 @@ Item {
         anchors { fill: parent; margins: vpx(5) }
 
         asynchronous: true
-        visible: source
+        visible: source != ""
 
         source: game.assets.boxFront
             || game.assets.poster
