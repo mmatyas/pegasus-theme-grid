@@ -94,6 +94,13 @@ Item {
         }
     }
 
+    FavoriteHeart {
+        visible: game.favorite
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.margins: vpx(-5)
+    }
+
     MouseArea {
         anchors.fill: parent
         onClicked: root.clicked()
