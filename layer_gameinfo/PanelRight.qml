@@ -86,22 +86,33 @@ Item {
         bottomPadding: vpx(16)
 
         text: {
-            var text_tmp = "";
-
             if (!game)
-                return text_tmp;
+                return "";
 
-            if (game.releaseYear > 0)
-                text_tmp += game.releaseYear;
-            if (game.developer) {
-                if (text_tmp)
-                    text_tmp += " \u2014 ";
+            const parts = [];
 
-                text_tmp += game.developer;
-                if (game.publisher && game.developer !== game.publisher)
-                    text_tmp += " / " + game.publisher;
+            if (game.releaseYear) {
+                parts.push(game.releaseYear);
             }
-            return text_tmp;
+            if (game.developer || game.publisher) {
+                if (game.developer === game.publisher) {
+                    parts.push(game.developer);
+                }
+                else {
+                    const str = [game.developer, game.publisher]
+                        .filter(Boolean)
+                        .join(' / ');
+                    parts.push(str);
+                }
+            }
+            if (game.players > 1) {
+                let str = '\u263b'.repeat(Math.min(game.players, 4));
+                if (game.players > 4)
+                    str += '+';
+                parts.push(str);
+            }
+
+            return parts.join(' \u2014 ');
         }
         color: "#eee"
         font {
