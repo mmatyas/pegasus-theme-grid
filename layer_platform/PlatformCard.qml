@@ -86,5 +86,19 @@ Item {
             horizontalCenter: parent.horizontalCenter
             horizontalCenterOffset: vpx(-32)
         }
+
+        Text {
+            text: platformShortName
+            color: "#eee"
+            anchors.fill: parent
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            elide: Text.ElideRight
+            visible: parent.status != Image.Ready
+            font.bold: true
+            font.capitalization: Font.AllUppercase
+            font.pixelSize: vpx(36)
+            font.family: globalFonts.condensed
+        }
     }
 }
