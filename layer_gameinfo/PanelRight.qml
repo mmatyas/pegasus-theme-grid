@@ -23,6 +23,7 @@ Item {
     property var game
 
     onGameChanged: {
+        videoPreview.state = "";
         videoPreview.stop();
         videoPreview.playlist.clear();
         videoDelay.restart();
@@ -31,13 +32,14 @@ Item {
     // a small delay to avoid loading videos during scrolling
     Timer {
         id: videoDelay
-        interval: 250
+        interval: 300
         onTriggered: {
             if (game && game.assets.videos.length > 0) {
                 for (var i = 0; i < game.assets.videos.length; i++)
                     videoPreview.playlist.addItem(game.assets.videos[i]);
 
                 videoPreview.play();
+                videoPreview.state = "playing";
             }
         }
     }
@@ -157,20 +159,8 @@ Item {
 
         visible: (game && (game.assets.videos.length || game.assets.screenshots.length)) || false
 
-        Video {
-            id: videoPreview
-            visible: playlist.itemCount > 0
-
-            anchors { fill: parent; margins: 1 }
-            fillMode: VideoOutput.PreserveAspectFit
-
-            playlist: Playlist {
-                playbackMode: Playlist.Loop
-            }
-        }
-
         Image {
-            visible: !videoPreview.visible
+            visible: !videoPreview.visible || videoPreview.opacity < 0.99
 
             anchors { fill: parent; margins: 1 }
             fillMode: Image.PreserveAspectFit
@@ -178,6 +168,28 @@ Item {
             source: (game && game.assets.screenshots.length && game.assets.screenshots[0]) || ""
             sourceSize { width: 512; height: 512 }
             asynchronous: true
+        }
+
+        Video {
+            id: videoPreview
+            visible: playlist.itemCount > 0 && opacity > 0
+            opacity: 0
+
+            anchors { fill: parent; margins: 1 }
+            fillMode: VideoOutput.PreserveAspectFit
+
+            playlist: Playlist {
+                playbackMode: Playlist.Loop
+            }
+
+            states: State {
+                name: "playing"
+                PropertyChanges { target: videoPreview; opacity: 1 }
+            }
+            transitions: Transition {
+                from: ""; to: "playing"
+                NumberAnimation { properties: 'opacity'; duration: 1000 }
+            }
         }
     }
 }
