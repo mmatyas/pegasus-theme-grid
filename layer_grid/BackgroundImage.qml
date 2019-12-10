@@ -21,16 +21,61 @@ import QtGraphicalEffects 1.0
 Item {
     property var game
 
+    visible: game
+
+    readonly property double currentMaxOpacity: game && game.assets.background && 1.0 || 0.35
+    readonly property string currentSource: {
+        if (!game)
+            return "";
+        return game.assets.background
+            || game.assets.screenshots[0]
+            || "";
+    }
+    onCurrentSourceChanged: delay.restart()
+
+    states: State {
+        name: "alt"
+        PropertyChanges { target: imgA; opacity: currentMaxOpacity }
+        PropertyChanges { target: imgB; opacity: 0 }
+    }
+    transitions: Transition {
+        NumberAnimation { properties: 'opacity'; duration: 500 }
+    }
+
+    Timer {
+        id: delay
+        interval: 200
+        onTriggered: {
+            if (state == "") {
+                imgA.source = currentSource;
+                state = "alt";
+            } else {
+                imgB.source = currentSource;
+                state = "";
+            }
+        }
+    }
+
     Image {
+        id: imgA
         anchors.fill: parent
-        visible: game
+        opacity: 0
+        visible: opacity > 0 && source
 
-        asynchronous: true
-        opacity: (game && game.assets.background) ? 1 : 0.35
-
-        source: game ? game.assets.background || game.assets.screenshots[0] || "" : ""
         sourceSize { width: 512; height: 512 }
         fillMode: Image.PreserveAspectCrop
+        asynchronous: true
+        smooth: false
+    }
+    Image {
+        id: imgB
+        anchors.fill: parent
+        opacity: currentMaxOpacity
+        visible: opacity > 0 && source
+
+        sourceSize { width: 512; height: 512 }
+        fillMode: Image.PreserveAspectCrop
+        asynchronous: true
         smooth: false
     }
 
