@@ -79,7 +79,7 @@ Item {
         opacity: parent.isOnTop ? 1.0 : 0.3
 
         width: parent.width * 0.6
-        height: parent.height - 12
+        height: parent.height - vpx(12)
         anchors {
             bottom: parent.bottom
             bottomMargin: vpx(6)
