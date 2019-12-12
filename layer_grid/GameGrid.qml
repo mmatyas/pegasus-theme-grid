@@ -96,6 +96,9 @@ FocusScope {
 
 
         Keys.onPressed: {
+            if (event.isAutoRepeat)
+                return;
+
             if (api.keys.isPageUp(event) || api.keys.isPageDown(event)) {
                 event.accepted = true;
                 var rows_to_skip = Math.max(1, Math.round(grid.height / cellHeight));
