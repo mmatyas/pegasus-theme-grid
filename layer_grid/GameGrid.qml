@@ -90,11 +90,6 @@ FocusScope {
             bottom: parent.bottom
         }
 
-        function cells_need_recalc() {
-            firstImageLoaded = false;
-            cellHeightRatio = 0.5;
-        }
-
         model: filteredGames
         onModelChanged: cells_need_recalc()
         onCountChanged: cells_need_recalc()
@@ -131,14 +126,17 @@ FocusScope {
             return 3;
         }
 
-        property bool firstImageLoaded: false
+        readonly property int maxRecalcs: 5
+        property int currentRecalcs: 0
         property real cellHeightRatio: 0.5
 
-        function calcHeightRatio(imageW, imageH) {
+        function cells_need_recalc() {
+            currentRecalcs = 0;
             cellHeightRatio = 0.5;
+        }
 
-            if (imageW > 0 && imageH > 0)
-                cellHeightRatio = imageH / imageW;
+        function update_cell_height_ratio(img_w, img_h) {
+            cellHeightRatio = Math.min(Math.max(cellHeightRatio, img_h / img_w), 1.5);
         }
 
 
@@ -159,6 +157,7 @@ FocusScope {
 
         delegate: GameGridItem {
             width: GridView.view.cellWidth
+            height: GridView.view.cellHeight
             selected: GridView.isCurrentItem
 
             game: modelData
@@ -174,16 +173,10 @@ FocusScope {
                 }
             }
 
-            imageHeightRatio: {
-                if (grid.firstImageLoaded) return grid.cellHeightRatio;
-                return 0.5;
-            }
             onImageLoaded: {
-                // NOTE: because images are loaded asynchronously,
-                // firstImageLoaded may appear false multiple times!
-                if (!grid.firstImageLoaded) {
-                    grid.firstImageLoaded = true;
-                    grid.calcHeightRatio(imageWidth, imageHeight);
+                if (grid.currentRecalcs < grid.maxRecalcs) {
+                    grid.currentRecalcs++;
+                    grid.update_cell_height_ratio(imageWidth, imageHeight);
                 }
             }
         }

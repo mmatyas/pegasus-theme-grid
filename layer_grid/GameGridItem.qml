@@ -26,10 +26,6 @@ Item {
 
     property alias imageWidth: boxFront.paintedWidth
     property alias imageHeight: boxFront.paintedHeight
-    property real imageHeightRatio: 0.5
-
-
-    height: width * imageHeightRatio
 
     signal clicked()
     signal doubleClicked()
@@ -59,8 +55,7 @@ Item {
         fillMode: Image.PreserveAspectFit
 
         onStatusChanged: if (status === Image.Ready) {
-            imageHeightRatio = paintedHeight / paintedWidth;
-            root.imageLoaded(paintedWidth, paintedHeight);
+            root.imageLoaded(implicitWidth, implicitHeight);
         }
     }
 
