@@ -108,7 +108,7 @@ Item {
                 }
             }
             if (game.players > 1) {
-                let str = '\u263b'.repeat(Math.min(game.players, 4));
+                let str = '\u263b\u2060'.repeat(Math.min(game.players, 4));
                 if (game.players > 4)
                     str += '+';
                 parts.push(str);
