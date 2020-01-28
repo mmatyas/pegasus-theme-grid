@@ -1,5 +1,5 @@
 // Pegasus Frontend
-// Copyright (C) 2017-2018  Mátyás Mustoha
+// Copyright (C) 2017-2020  Mátyás Mustoha
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,8 +19,9 @@ import QtQuick 2.0
 import "qrc:/qmlutils" as PegasusUtils
 
 Rectangle {
-    property alias collectionIndex: platformPath.currentIndex
-    readonly property var currentCollection: api.collections.get(collectionIndex)
+    property alias model: platformPath.model
+    property alias currentIndex: platformPath.currentIndex
+    readonly property var currentCollection: model.get(currentIndex)
 
     color: "#333"
     height: vpx(54)
@@ -34,25 +35,24 @@ Rectangle {
 
     PathView {
         id: platformPath
-        model: api.collections
         delegate: platformCardDelegate
 
         path: Path {
             startX: vpx(-400)
             startY: vpx(36)
-
             PathAttribute { name: "itemZ"; value: 201 }
-            PathLine { x: parent.width * 0.2; y: vpx(36) }
 
+            PathLine { x: parent.width * 0.2; y: vpx(36) }
             PathPercent { value: 0.04 }
             PathAttribute { name: "itemZ"; value: 200 }
+
             PathLine { x: parent.width * 0.23; y: vpx(18) }
-
             PathPercent { value: 0.08 }
-            PathLine { x: parent.width * 0.7; y: vpx(18) }
+            PathAttribute { name: "itemZ"; value: 199 }
 
+            PathLine { x: parent.width * 0.7; y: vpx(18) }
             PathPercent { value: 1 }
-            PathAttribute { name: "itemZ"; value: vpx(5) }
+            PathAttribute { name: "itemZ"; value: 0 }
         }
 
         pathItemCount: 20
@@ -66,11 +66,8 @@ Rectangle {
         id: platformCardDelegate
 
         PlatformCard {
-            platformShortName: shortName
+            platformShortName: modelData.shortName
             isOnTop: PathView.isCurrentItem
-
-            visible: PathView.onPath
-
             z: PathView.itemZ
             width: parent.parent.width * 0.5
             height: vpx(72)

@@ -35,11 +35,9 @@ Item {
         height: width
         color: main.color
         rotation: -70
-        anchors {
-            verticalCenter: parent.top
-            horizontalCenter: main.right
-            horizontalCenterOffset: vpx(-27)
-        }
+        anchors.verticalCenter: parent.top
+        anchors.horizontalCenter: main.right
+        anchors.horizontalCenterOffset: vpx(-27)
 
         Text {
             id: label
@@ -80,12 +78,10 @@ Item {
 
         width: parent.width * 0.6
         height: parent.height - vpx(12)
-        anchors {
-            bottom: parent.bottom
-            bottomMargin: vpx(6)
-            horizontalCenter: parent.horizontalCenter
-            horizontalCenterOffset: vpx(-32)
-        }
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: vpx(6)
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenterOffset: vpx(-32)
 
         Text {
             text: platformShortName

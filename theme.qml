@@ -29,6 +29,7 @@ FocusScope {
         anchors.left: parent.left
         anchors.right: parent.right
         z: 300
+        model: api.collections
     }
 
     BackgroundImage {
@@ -98,7 +99,7 @@ FocusScope {
         if (last_coll_idx < 0)
             return;
 
-        topbar.collectionIndex = last_coll_idx;
+        topbar.currentIndex = last_coll_idx;
 
         const last_game = api.memory.get('game');
         if (!last_game)
