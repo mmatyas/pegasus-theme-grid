@@ -112,11 +112,24 @@ FocusScope {
     SortFilterProxyModel {
         id: filteredGames
         sourceModel: topbar.currentCollection.games
-        filters: RegExpFilter {
-            roleName: "title"
-            pattern: filter.itemTitle
-            caseSensitivity: Qt.CaseInsensitive
-        }
+        filters: [
+            RegExpFilter {
+                roleName: "title"
+                pattern: filter.withTitle
+                caseSensitivity: Qt.CaseInsensitive
+                enabled: filter.withTitle
+            },
+            RangeFilter {
+                roleName: "players"
+                minimumValue: 2
+                enabled: filter.withMultiplayer
+            },
+            ValueFilter {
+                roleName: "favorite"
+                value: true
+                enabled: filter.withFavorite
+            }
+        ]
     }
 
     Component.onCompleted: {

@@ -15,13 +15,15 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-import QtQuick 2.0
+import QtQuick 2.6
 
 
 FocusScope {
     id: root
 
-    property alias itemTitle: itemTitleFilter.text
+    property alias withTitle: itemTitle.text
+    property alias withMultiplayer: itemMultiplayer.checked
+    property alias withFavorite: itemFavorite.checked
 
     property alias panelColor: panel.color
     property color textColor: "#eee"
@@ -35,81 +37,56 @@ FocusScope {
         anchors.fill: parent
     }
 
-    Item {
+    Column {
         id: content
 
         property int normalTextSize: vpx(20)
         property int selectedIndex: 0
-        property int padding: vpx(20)
-        property int spacing: vpx(8)
+        padding: vpx(20)
+        spacing: vpx(8)
 
-        width: vpx(250)
-        height: Math.min(vpx(600),
-            padding * 2
-            + itemHeader.height + spacing
-            + itemTitleFilter.height + spacing
-            /*+ api.filters.count * (normalTextSize * 1.4 + spacing)*/)
-
+        width: vpx(300)
 
         Text {
-            id: itemHeader
-            text: qsTr("Filters")
+            id: header
+            text: "Filters"
             color: root.textColor
-            font {
-                bold: true
-                pixelSize: vpx(26)
-                family: globalFonts.sans
-            }
+            font.bold: true
+            font.pixelSize: vpx(26)
+            font.family: globalFonts.sans
             height: font.pixelSize * 1.5
-
-            anchors {
-                top: parent.top; topMargin: parent.padding
-                left: parent.left; leftMargin: parent.padding
-            }
         }
 
         TextLine {
-            id: itemTitleFilter
+            id: itemTitle
 
-            placeholder: qsTr("title")
-            placeholderColor: "#bbb" // FIXME
+            placeholder: "title"
+            placeholderColor: "#bbb"
             textColor: root.textColor
             fontSize: content.normalTextSize
 
             focus: true
-            //KeyNavigation.down: itemFilterList
-
-            anchors {
-                top: itemHeader.bottom; topMargin: parent.spacing
-                left: parent.left; leftMargin: parent.padding
-                right: parent.right; rightMargin: parent.padding
-            }
+            KeyNavigation.down: itemFavorite
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: parent.padding
+            anchors.rightMargin: parent.padding
         }
 
-        /*ListView {
-            id: itemFilterList
+        CheckBox {
+            id: itemFavorite
+            text: "Favorite"
+            textColor: root.textColor
+            fontSize: content.normalTextSize
 
-            anchors {
-                top: itemTitleFilter.bottom; topMargin: parent.spacing
-                bottom: parent.bottom; bottomMargin: parent.padding * 0.75
-                left: parent.left; leftMargin: parent.padding
-                right: parent.right; rightMargin: parent.padding
-            }
-            clip: true
+            KeyNavigation.down: itemMultiplayer
+        }
 
-            model: api.filters.model
-            delegate: CheckBox {
-                text: modelData.name
-                textColor: root.textColor
-                fontSize: content.normalTextSize
-
-                checked: modelData.enabled
-                onCheckedChanged: api.filters.current.enabled = checked
-            }
-            spacing: parent.spacing
-
-            Component.onCompleted: currentIndex = api.filters.index
-            onCurrentIndexChanged: api.filters.index = currentIndex
-        }*/
+        CheckBox {
+            id: itemMultiplayer
+            text: "Multiplayer"
+            textColor: root.textColor
+            fontSize: content.normalTextSize
+        }
     }
 }

@@ -22,7 +22,9 @@ import "qrc:/qmlutils" as PegasusUtils
 FocusScope {
     id: root
 
-    property alias itemTitle: panel.itemTitle
+    property alias withTitle: panel.withTitle
+    property alias withMultiplayer: panel.withMultiplayer
+    property alias withFavorite: panel.withFavorite
 
     signal closeRequested
 
