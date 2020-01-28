@@ -23,6 +23,32 @@ import "layer_platform"
 
 
 FocusScope {
+    Keys.onPressed: {
+        if (event.isAutoRepeat)
+            return;
+
+        if (api.keys.isPrevPage(event)) {
+            event.accepted = true;
+            topbar.prev();
+            return;
+        }
+        if (api.keys.isNextPage(event)) {
+            event.accepted = true;
+            topbar.next();
+            return;
+        }
+        if (api.keys.isDetails(event)) {
+            event.accepted = true;
+            gamepreview.focus = true;
+            return;
+        }
+        if (api.keys.isFilters(event)) {
+            event.accepted = true;
+            filter.focus = true;
+            return;
+        }
+    }
+
     PlatformBar {
         id: topbar
         anchors.top: parent.top
@@ -56,10 +82,7 @@ FocusScope {
         anchors.right: parent.right
 
         platform: topbar.currentCollection
-        onNextPlatformRequested: topbar.next()
-        onPrevPlatformRequested: topbar.prev()
         onDetailsRequested: gamepreview.focus = true
-        onFiltersRequested: filter.focus = true
         onLaunchRequested: launchGame()
     }
 
