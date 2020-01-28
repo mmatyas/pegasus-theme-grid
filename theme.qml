@@ -87,20 +87,39 @@ FocusScope {
     }
 
     Component.onCompleted: {
-        var coll_idx = api.memory.get('collectionIndex') || 0;
-        var game_idx = api.memory.get('gameIndex') || 0;
+        const last_collection = api.memory.get('collection');
+        if (!last_collection)
+            return;
 
-        if (coll_idx < api.collections.count)
-            topbar.collectionIndex = coll_idx;
-        if (game_idx < api.collections.get(coll_idx).games.count)
-            gamegrid.gameIndex = game_idx;
+        const last_coll_idx = api
+            .collections
+            .toVarArray()
+            .findIndex(c => c.name === last_collection);
+        if (last_coll_idx < 0)
+            return;
 
+        topbar.collectionIndex = last_coll_idx;
+
+        const last_game = api.memory.get('game');
+        if (!last_game)
+            return;
+
+        const last_game_idx = api
+            .collections
+            .get(last_coll_idx)
+            .games
+            .toVarArray()
+            .findIndex(g => g.title === last_game);
+        if (last_game_idx < 0)
+            return;
+
+        gamegrid.gameIndex = last_game_idx;
         gamegrid.memoryLoaded = true;
     }
 
     function launchGame() {
-        api.memory.set('collectionIndex', topbar.collectionIndex);
-        api.memory.set('gameIndex', gamegrid.gameIndex);
+        api.memory.set('collection', topbar.currentCollection.name);
+        api.memory.set('game', gamegrid.currentGame.title);
         gamegrid.currentGame.launch();
     }
 }
