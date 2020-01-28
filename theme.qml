@@ -1,5 +1,5 @@
 // Pegasus Frontend
-// Copyright (C) 2017-2019  Mátyás Mustoha
+// Copyright (C) 2017-2020  Mátyás Mustoha
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -25,18 +25,17 @@ import "layer_platform"
 FocusScope {
     PlatformBar {
         id: topbar
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
         z: 300
-        anchors {
-            top: parent.top;
-            left: parent.left; right: parent.right
-        }
     }
 
     BackgroundImage {
-        anchors {
-            top: topbar.bottom; bottom: parent.bottom
-            left: parent.left; right: parent.right
-        }
+        anchors.top: topbar.bottom
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
 
         game: gamegrid.currentGame
     }
@@ -49,10 +48,11 @@ FocusScope {
         gridWidth: (parent.width * 0.6) - vpx(32)
         gridMarginTop: vpx(32)
         gridMarginRight: vpx(6)
-        anchors {
-            top: topbar.bottom; bottom: parent.bottom
-            left: parent.left; right: parent.right
-        }
+
+        anchors.top: topbar.bottom
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
 
         platform: topbar.currentCollection
         onNextPlatformRequested: topbar.next()
