@@ -16,6 +16,7 @@
 
 
 import QtQuick 2.0
+import SortFilterProxyModel 0.2
 import "layer_filter"
 import "layer_gameinfo"
 import "layer_grid"
@@ -81,7 +82,8 @@ FocusScope {
         anchors.left: parent.left
         anchors.right: parent.right
 
-        platform: topbar.currentCollection
+        originalModel: topbar.currentCollection.games
+        filteredModel: filteredGames
         onDetailsRequested: gamepreview.focus = true
         onLaunchRequested: launchGame()
     }
@@ -105,9 +107,16 @@ FocusScope {
     FilterLayer {
         id: filter
         anchors.fill: parent
-
         onCloseRequested: gamegrid.focus = true
-        onTitleFilterChanged: gamegrid.filterTitle = tfil
+    }
+    SortFilterProxyModel {
+        id: filteredGames
+        sourceModel: topbar.currentCollection.games
+        filters: RegExpFilter {
+            roleName: "title"
+            pattern: filter.itemTitle
+            caseSensitivity: Qt.CaseInsensitive
+        }
     }
 
     Component.onCompleted: {

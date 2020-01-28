@@ -1,5 +1,5 @@
 // Pegasus Frontend
-// Copyright (C) 2017-2019  Mátyás Mustoha
+// Copyright (C) 2017-2020  Mátyás Mustoha
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,10 +21,10 @@ import QtQuick 2.0
 FocusScope {
     id: root
 
+    property alias itemTitle: itemTitleFilter.text
+
     property alias panelColor: panel.color
     property color textColor: "#eee"
-
-    signal titleFilterChanged(string tfil)
 
     width: content.width
     height: content.height
@@ -75,7 +75,6 @@ FocusScope {
             placeholderColor: "#bbb" // FIXME
             textColor: root.textColor
             fontSize: content.normalTextSize
-            onTextChanged: root.titleFilterChanged(text)
 
             focus: true
             //KeyNavigation.down: itemFilterList

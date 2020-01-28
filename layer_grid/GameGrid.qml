@@ -16,11 +16,13 @@
 
 
 import QtQuick 2.3
-import SortFilterProxyModel 0.2
 
 
 FocusScope {
     id: root
+
+    property alias filteredModel: grid.model
+    property var originalModel
 
     property alias gridWidth: grid.width
     property int gridMarginTop: 0
@@ -32,23 +34,13 @@ FocusScope {
     property var platform
     property alias gameIndex: grid.currentIndex
     readonly property bool gameIndexValid: 0 <= gameIndex && gameIndex < grid.count
-    readonly property int srcGameIndex: gameIndexValid ? filteredGames.mapToSource(gameIndex) : -1
-    readonly property var currentGame: srcGameIndex >= 0 ? platform.games.get(srcGameIndex) : null
+    readonly property int srcGameIndex: gameIndexValid ? filteredModel.mapToSource(gameIndex) : -1
+    readonly property var currentGame: srcGameIndex >= 0 ? originalModel.get(srcGameIndex) : null
 
     signal detailsRequested
     signal launchRequested
 
-    onPlatformChanged: if (memoryLoaded && grid.count) gameIndex = 0;
-
-    SortFilterProxyModel {
-        id: filteredGames
-        sourceModel: platform.games
-        filters: RegExpFilter {
-            roleName: "title"
-            pattern: filterTitle
-            caseSensitivity: Qt.CaseInsensitive
-        }
-    }
+    onOriginalModelChanged: if (memoryLoaded && grid.count) gameIndex = 0;
 
     GridView {
         id: grid
@@ -61,7 +53,6 @@ FocusScope {
         anchors.rightMargin: root.gridMarginRight
         anchors.bottom: parent.bottom
 
-        model: filteredGames
         onModelChanged: cells_need_recalc()
         onCountChanged: cells_need_recalc()
 
