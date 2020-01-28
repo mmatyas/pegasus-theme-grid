@@ -56,7 +56,9 @@ FocusScope {
         anchors.left: parent.left
         anchors.right: parent.right
         z: 300
+
         model: api.collections
+        onCurrentIndexChanged: gamegrid.cells_need_recalc()
     }
 
     BackgroundImage {

@@ -29,9 +29,6 @@ FocusScope {
     property int gridMarginRight: 0
     property bool memoryLoaded: false
 
-    property string filterTitle: ""
-
-    property var platform
     property alias gameIndex: grid.currentIndex
     readonly property bool gameIndexValid: 0 <= gameIndex && gameIndex < grid.count
     readonly property int srcGameIndex: gameIndexValid ? filteredModel.mapToSource(gameIndex) : -1
@@ -39,6 +36,11 @@ FocusScope {
 
     signal detailsRequested
     signal launchRequested
+
+    function cells_need_recalc() {
+        grid.currentRecalcs = 0;
+        grid.cellHeightRatio = 0.5;
+    }
 
     onOriginalModelChanged: if (memoryLoaded && grid.count) gameIndex = 0;
 
@@ -52,10 +54,6 @@ FocusScope {
         anchors.right: parent.right
         anchors.rightMargin: root.gridMarginRight
         anchors.bottom: parent.bottom
-
-        onModelChanged: cells_need_recalc()
-        onCountChanged: cells_need_recalc()
-
 
         Keys.onPressed: {
             if (event.isAutoRepeat)
@@ -94,11 +92,6 @@ FocusScope {
         readonly property int maxRecalcs: 5
         property int currentRecalcs: 0
         property real cellHeightRatio: 0.5
-
-        function cells_need_recalc() {
-            currentRecalcs = 0;
-            cellHeightRatio = 0.5;
-        }
 
         function update_cell_height_ratio(img_w, img_h) {
             cellHeightRatio = Math.min(Math.max(cellHeightRatio, img_h / img_w), 1.5);
