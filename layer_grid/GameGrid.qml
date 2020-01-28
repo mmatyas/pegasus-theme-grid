@@ -29,10 +29,14 @@ FocusScope {
     property int gridMarginRight: 0
     property bool memoryLoaded: false
 
-    property alias gameIndex: grid.currentIndex
-    readonly property bool gameIndexValid: 0 <= gameIndex && gameIndex < grid.count
-    readonly property int srcGameIndex: gameIndexValid ? filteredModel.mapToSource(gameIndex) : -1
-    readonly property var currentGame: srcGameIndex >= 0 ? originalModel.get(srcGameIndex) : null
+    property alias currentIndex: grid.currentIndex
+    readonly property var currentGame: {
+        // BUG/FIXME: SortFilterProxyModel returns an 'Object {}' instead of null/undefined
+        const src_idx = grid.count
+            ? filteredModel.mapToSource(grid.currentIndex)
+            : -1;
+        return originalModel.get(src_idx);
+    }
 
     signal detailsRequested
     signal launchRequested
@@ -42,7 +46,7 @@ FocusScope {
         grid.cellHeightRatio = 0.5;
     }
 
-    onOriginalModelChanged: if (memoryLoaded && grid.count) gameIndex = 0;
+    onOriginalModelChanged: if (memoryLoaded && grid.count) currentIndex = 0;
 
     GridView {
         id: grid

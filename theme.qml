@@ -161,7 +161,7 @@ FocusScope {
         if (last_game_idx < 0)
             return;
 
-        gamegrid.gameIndex = last_game_idx;
+        gamegrid.currentIndex = last_game_idx;
         gamegrid.memoryLoaded = true;
     }
 
