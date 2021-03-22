@@ -23,6 +23,7 @@ FocusScope {
 
     property alias filteredModel: grid.model
     property var originalModel
+    property var baseCollection
 
     property alias gridWidth: grid.width
     property int gridMarginTop: 0
@@ -122,6 +123,7 @@ FocusScope {
             height: GridView.view.cellHeight
             selected: GridView.isCurrentItem
 
+            collection: root.baseCollection
             game: modelData
 
             onClicked: GridView.view.currentIndex = index

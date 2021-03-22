@@ -23,6 +23,7 @@ Item {
 
     property bool selected: false
     property var game
+    property var collection
 
     property alias imageWidth: boxFront.paintedWidth
     property alias imageHeight: boxFront.paintedHeight
@@ -50,6 +51,12 @@ Item {
             || game.assets.steam
             || game.assets.tile
             || game.assets.cartridge
+            || collection.assets.boxFront
+            || collection.assets.poster
+            || collection.assets.banner
+            || collection.assets.steam
+            || collection.assets.tile
+            || collection.assets.cartridge
             || ""
         sourceSize { width: 256; height: 256 }
         fillMode: Image.PreserveAspectFit

@@ -84,6 +84,7 @@ FocusScope {
         anchors.left: parent.left
         anchors.right: parent.right
 
+        baseCollection: topbar.currentCollection
         originalModel: topbar.currentCollection.games
         filteredModel: filteredGames
         onDetailsRequested: gamepreview.focus = true
