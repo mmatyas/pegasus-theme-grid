@@ -64,6 +64,16 @@ Item {
         onStatusChanged: if (status === Image.Ready) {
             root.imageLoaded(implicitWidth, implicitHeight);
         }
+
+        Rectangle {
+            anchors.centerIn: parent
+            visible: game.missing
+
+            color: "#808080"
+            width: boxFront.width
+            height: boxFront.height
+            opacity: 0.4
+        }
     }
 
     Image {
@@ -89,7 +99,7 @@ Item {
         text: game.title
         wrapMode: Text.Wrap
         horizontalAlignment: Text.AlignHCenter
-        color: "#eee"
+        color: game.missing ? "#808080" : "#eee"
         font {
             pixelSize: vpx(16)
             family: globalFonts.sans
